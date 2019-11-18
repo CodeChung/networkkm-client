@@ -1,0 +1,8 @@
+.ThingListPage {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.landing-block form label {
+  display: none;
+}

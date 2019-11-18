@@ -1,0 +1,40 @@
+.HomePage {
+    text-align: center;
+}
+
+.home-columns {
+    display: flex;
+    justify-content: space-around;
+    padding: 20px 0;
+}
+
+.home-column {
+    width: 250px;
+}
+
+.home-column h2 {
+    background: black;
+    border-radius: 5px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: ghostwhite;
+}
+
+.column-box {
+    min-height: 600px;
+    background: ghostwhite;
+    border-radius: 5px;
+}
+
+.column-box ul {
+    padding: 30px;
+    text-align: left;
+}
+
+.column-box ul li {
+    text-decoration: none;
+    list-style-type: none;
+    padding: 5px 0;
+}
