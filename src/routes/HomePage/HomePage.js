@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Section } from '../../components/Utils/Utils'
 import './HomePage.css'
+import NetworkApiService from '../../services/network-api-service'
 
 export default class HomePage extends Component {
     static defaultProps = {
@@ -10,7 +11,23 @@ export default class HomePage extends Component {
         },
     }
 
+    state = {
+        loading: true,
+        friends: [],
+        community: [],
+        world: []
+    }
+
+    componentDidMount() {
+        NetworkApiService.getFriends()
+        this.setState({ loading: false })
+    }
+
     render() {
+        const { loading } = this.state
+        if (loading) {
+            return <img src='https://media1.tenor.com/images/d6cd5151c04765d1992edfde14483068/tenor.gif' alt='loading' />
+        }
         return (
             <Section className='HomePage'>
                 <section className='home-columns'>
@@ -25,6 +42,7 @@ export default class HomePage extends Component {
                     <div className='home-column'>
                         <h2>My People</h2>
                         <div className='column-box'>
+                            {/* <input /> */}
                             <ul>
                                 <li>Jimmy John</li>
                                 <li>Jimothy Jones</li>

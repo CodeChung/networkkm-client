@@ -7,12 +7,21 @@ import './ThingListPage.css'
 import RegistrationForm from '../../components/RegistrationForm/RegistrationForm'
 import LoginForm from '../../components/LoginForm/LoginForm'
 import HomePage from '../HomePage/HomePage'
+import TokenService from '../../services/token-service'
 
 export default class ThingListPage extends Component {
   static contextType = ThingListContext
 
+  state = {
+    logged: TokenService.hasAuthToken()
+  }
+
   componentDidMount() {
 
+  }
+
+  login() {
+    this.setState({ logged: true })
   }
 
   renderThings() {
@@ -27,6 +36,10 @@ export default class ThingListPage extends Component {
 
   render() {
     const { error } = this.context
+    const { logged } = this.state
+    if (logged) {
+      return <HomePage />
+    }
     return (
       <Section list className='ThingListPage'>
         <div className='landing-block'>
@@ -51,9 +64,8 @@ export default class ThingListPage extends Component {
           <b>Join Today!!! - It's Free!!!</b> Your friends and family can notify you by email or text or both.</p>
         </div>
         <RegistrationForm />
-        <LoginForm />
+        <LoginForm onLogin={() => this.login()} />
       </Section>
-      // <HomePage />
     )
   }
 }

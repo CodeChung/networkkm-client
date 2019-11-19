@@ -1,23 +1,31 @@
 import React, { Component } from 'react'
 import { Button, Input } from '../Utils/Utils'
+import NetworkApiService from '../../services/network-api-service'
+import TokenService from '../../services/token-service'
 
 export default class LoginForm extends Component {
   static defaultProps = {
-    onLoginSuccess: () => {}
+    onLoginSuccess: () => { }
   }
 
   state = { error: null }
 
   handleSubmitBasicAuth = ev => {
     ev.preventDefault()
-    const { user_name, password } = ev.target
+    const { email, password } = ev.target
+    const user = {
+      email: email.value,
+      password: password.value
+    }
+    NetworkApiService.loginUser(user)
+      .then(res => {
+        TokenService.saveAuthToken(res.authToken)
+        this.props.onLogin()
+      })
+      .catch(res => console.log(res))
 
-    console.log('login form submitted')
-    console.log({ user_name, password })
-
-    user_name.value = ''
+    email.value = ''
     password.value = ''
-    this.props.onLoginSuccess()
   }
 
   render() {
@@ -27,17 +35,19 @@ export default class LoginForm extends Component {
         className='LoginForm'
         onSubmit={this.handleSubmitBasicAuth}
       >
+        <legend>Login</legend>
         <div role='alert'>
           {error && <p className='red'>{error}</p>}
         </div>
-        <div className='user_name'>
-          <label htmlFor='LoginForm__user_name'>
+        <div className='email'>
+          <label htmlFor='LoginForm__email'>
             Email
           </label>
           <Input
+            autoComplete='username'
             required
-            name='user_name'
-            id='LoginForm__user_name'>
+            name='email'
+            id='LoginForm__email'>
           </Input>
         </div>
         <div className='password'>
@@ -46,6 +56,7 @@ export default class LoginForm extends Component {
           </label>
           <Input
             required
+            autoComplete="current-password"
             name='password'
             type='password'
             id='LoginForm__password'>

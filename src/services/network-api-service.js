@@ -1,4 +1,5 @@
 import config from '../config'
+import TokenService from './token-service'
 
 const NetworkApiService = {
     registerUser(user) {
@@ -15,6 +16,30 @@ const NetworkApiService = {
                     : res.json()
             )
     },
+    loginUser(user) {
+        return fetch(`${config.API_ENDPOINT}/auth/login`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res =>
+                (!res.ok)
+                    ? res.json().then(e => Promise.reject(e))
+                    : res.json()
+            )
+    },
+    getFriends() {
+        return fetch(`${config.API_ENDPOINT}/friends`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${TokenService.getAuthToken()}`
+            }
+        })
+    },
+
 }
 
 export default NetworkApiService

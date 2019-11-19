@@ -1,4 +1,4 @@
-# Thingful Client
+# NetworkKM Client
 
 ## Setting Up
 

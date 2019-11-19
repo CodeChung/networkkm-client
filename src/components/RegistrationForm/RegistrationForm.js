@@ -38,6 +38,7 @@ export default class RegistrationForm extends Component {
         className='RegistrationForm'
         onSubmit={this.handleSubmit}
       >
+        <legend>Join Now</legend>
         <div role='alert'>
           {error && <p className='red'>{error}</p>}
         </div>
@@ -71,6 +72,7 @@ export default class RegistrationForm extends Component {
             name='email'
             type='text'
             required
+            autoComplete='username'
             id='RegistrationForm__email'>
           </Input>
         </div>
@@ -82,18 +84,20 @@ export default class RegistrationForm extends Component {
             name='password'
             type='password'
             required
+            autoComplete='new-password'
             id='RegistrationForm__password'>
           </Input>
         </div>
         <div className='password'>
-          <label htmlFor='RegistrationForm__password'>
+          <label htmlFor='RegistrationForm__confirm_password'>
             Confirm Password <Required />
           </label>
           <Input
             name='confirm-password'
             type='password'
             required
-            id='RegistrationForm__password'>
+            autoComplete='new-password'
+            id='RegistrationForm__confirm_password'>
           </Input>
         </div>
         <Button type='submit'>
