@@ -30,6 +30,19 @@ const NetworkApiService = {
                     : res.json()
             )
     },
+    getUser() {
+        return fetch(`${config.API_ENDPOINT}/friends/identify`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${TokenService.getAuthToken()}`
+            }
+        })
+            .then(res =>
+                (!res.ok)
+                    ? res.json().then(e => Promise.reject(e))
+                    : res.json()
+            )
+    },
     getFriends() {
         return fetch(`${config.API_ENDPOINT}/friends`, {
             method: 'GET',
@@ -38,6 +51,11 @@ const NetworkApiService = {
                 'Authorization': `Bearer ${TokenService.getAuthToken()}`
             }
         })
+            .then(res =>
+                (!res.ok)
+                    ? res.json().then(e => Promise.reject(e))
+                    : res.json()
+            )
     },
 
 }

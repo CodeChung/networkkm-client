@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import ThingListContext from '../../contexts/ThingListContext'
-import ThingApiService from '../../services/thing-api-service'
+// import ThingApiService from '../../services/thing-api-service'
 import { Section } from '../../components/Utils/Utils'
 import ThingListItem from '../../components/ThingListItem/ThingListItem'
 import './ThingListPage.css'
@@ -35,7 +35,7 @@ export default class ThingListPage extends Component {
   }
 
   render() {
-    const { error } = this.context
+    // const { error } = this.context
     const { logged } = this.state
     if (logged) {
       return <HomePage />
