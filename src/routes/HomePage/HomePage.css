@@ -38,3 +38,11 @@
     list-style-type: none;
     padding: 5px 0;
 }
+
+.loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    margin: 0 auto;
+}

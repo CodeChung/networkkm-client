@@ -15,18 +15,32 @@ export default class HomePage extends Component {
     state = {
         loading: true,
         friends: [],
+        friendList: [],
         community: [],
-        world: []
+        communityList: [],
+        world: [],
+        worldList: [],
+        searchFriend: '',
+        searchCommunity: '',
+        searchWorld: '',
     }
 
     componentDidMount() {
         NetworkApiService.getFriends()
             .then(network => {
-                let friends = network.friends.map(user => this.userToList(user))
-                let community = network.community.map(user => this.userToList(user))
-                let world = network.world.map(user => this.userToList(user))
+                let friendList = network.friends.map(user => this.userToList(user))
+                let communityList = network.community.map(user => this.userToList(user))
+                let worldList = network.world.map(user => this.userToList(user))
 
-                this.setState({ friends, community, world, loading: false })
+                this.setState({
+                    friends: network.friends,
+                    friendList,
+                    community: network.community,
+                    communityList,
+                    world: network.world,
+                    worldList,
+                    loading: false
+                })
             })
             .catch(err => console.alert(err))
     }
@@ -35,10 +49,46 @@ export default class HomePage extends Component {
         return <li key={user.id}><Link to={`/user/${user.id}`}>{`${user.first_name} ${user.last_name}`}</Link></li>
     }
 
+    handleSearchPeople = (event) => {
+        event.preventDefault()
+        this.setState({ searchFriend: event.target.value })
+    }
+
+    handleSearchCommunity = (event) => {
+        event.preventDefault()
+        this.setState({ searchCommunity: event.target.value })
+    }
+
+    handleSearchWorld = (event) => {
+        event.preventDefault()
+        this.setState({ searchWorld: event.target.value })
+    }
+
     render() {
-        const { friends, community, world, loading } = this.state
+        const { 
+            friends, friendList, community, 
+            communityList, world, worldList, 
+            loading, searchFriend, searchCommunity, 
+            searchWorld, 
+        } = this.state
+
+        const friendSearch = searchFriend
+            ? friends.filter(friend => friend.first_name.toLowerCase().includes(searchFriend.toLowerCase())
+                || friend.last_name.toLowerCase().includes(searchFriend.toLowerCase())).map(user => this.userToList(user))
+            : []
+
+        const communitySearch = searchCommunity
+            ? community.filter(friend => friend.first_name.toLowerCase().includes(searchCommunity.toLowerCase())
+                || friend.last_name.toLowerCase().includes(searchCommunity.toLowerCase())).map(user => this.userToList(user))
+            : []
+
+        const worldSearch = searchWorld
+            ? world.filter(friend => friend.first_name.toLowerCase().includes(searchWorld.toLowerCase())
+                || friend.last_name.toLowerCase().includes(searchWorld.toLowerCase())).map(user => this.userToList(user))
+            : []
+
         if (loading) {
-            return <img src='https://media1.tenor.com/images/d6cd5151c04765d1992edfde14483068/tenor.gif' alt='loading' />
+            return <img className='loading' src='https://media1.tenor.com/images/d6cd5151c04765d1992edfde14483068/tenor.gif' alt='loading' />
         }
         return (
             <Section className='HomePage'>
@@ -54,25 +104,45 @@ export default class HomePage extends Component {
                     <div className='home-column'>
                         <h2>My People</h2>
                         <div className='column-box'>
-                            {/* <input /> */}
+                            <form>
+                                <input
+                                    onChange={(event) => this.handleSearchPeople(event)}
+                                    value={searchFriend}
+                                    placeholder='Search People' />
+                                <button>Search</button>
+                            </form>
                             <ul>
-                                {friends}
+                                {friendSearch.length ? friendSearch : friendList}
                             </ul>
                         </div>
                     </div>
                     <div className='home-column'>
                         <h2>My Community</h2>
                         <div className='column-box'>
+                            <form>
+                                <input
+                                    onChange={(event) => this.handleSearchCommunity(event)}
+                                    value={searchCommunity}
+                                    placeholder='Search Community' />
+                                <button>Search</button>
+                            </form>
                             <ul>
-                                {community}
+                                {communitySearch.length ? communitySearch : communityList}
                             </ul>
                         </div>
                     </div>
                     <div className='home-column'>
                         <h2>My World</h2>
                         <div className='column-box'>
+                            <form>
+                                <input
+                                    onChange={(event) => this.handleSearchWorld(event)}
+                                    value={searchWorld}
+                                    placeholder='Search World' />
+                                <button>Search</button>
+                            </form>
                             <ul>
-                               {world}
+                                {worldSearch.length ? worldSearch : worldList}
                             </ul>
                         </div>
                     </div>

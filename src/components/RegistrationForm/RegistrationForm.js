@@ -4,7 +4,7 @@ import NetworkApiService from '../../services/network-api-service'
 
 export default class RegistrationForm extends Component {
   static defaultProps = {
-    onRegistrationSuccess: () => {}
+    onRegistrationSuccess: () => { }
   }
 
   state = { error: null }
@@ -21,14 +21,16 @@ export default class RegistrationForm extends Component {
     }
 
     NetworkApiService.registerUser(user)
-    .then()
-    .catch(err => console.log(`ERROR `, err.error))
+      .then(newUser => {
+        newUser.password = password.value
+        this.props.onSuccessfulRegistration(newUser)
+      })
+      .catch(err => console.log(`ERROR `, err))
 
     first_name.value = ''
     email.value = ''
     last_name.value = ''
     password.value = ''
-    this.props.onRegistrationSuccess()
   }
 
   render() {

@@ -8,6 +8,7 @@ import RegistrationForm from '../../components/RegistrationForm/RegistrationForm
 import LoginForm from '../../components/LoginForm/LoginForm'
 import HomePage from '../HomePage/HomePage'
 import TokenService from '../../services/token-service'
+import NetworkApiService from '../../services/network-api-service'
 
 export default class ThingListPage extends Component {
   static contextType = ThingListContext
@@ -32,6 +33,22 @@ export default class ThingListPage extends Component {
         thing={thing}
       />
     )
+  }
+
+  redirectSuccessfulRegistration = (user) => {
+    console.log(user)
+
+    const userLogin = {
+      email: user.email,
+      password: user.password
+    }
+
+    NetworkApiService.loginUser(userLogin)
+      .then(res => {
+        TokenService.saveAuthToken(res.authToken)
+        this.login()
+      })
+    .catch(res => console.lorg(res))
   }
 
   render() {
@@ -63,7 +80,7 @@ export default class ThingListPage extends Component {
           <br/>
           <b>Join Today!!! - It's Free!!!</b> Your friends and family can notify you by email or text or both.</p>
         </div>
-        <RegistrationForm />
+        <RegistrationForm onSuccessfulRegistration={this.redirectSuccessfulRegistration}/>
         <LoginForm onLogin={() => this.login()} />
       </Section>
     )
