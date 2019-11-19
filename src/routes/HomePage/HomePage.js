@@ -102,7 +102,7 @@ export default class HomePage extends Component {
                         </div>
                     </div>
                     <div className='home-column'>
-                        <h2>My People</h2>
+                        <h2>My People<span>{friendSearch.length ? friendSearch.length : friendList.length}</span></h2>
                         <div className='column-box'>
                             <form>
                                 <input
@@ -117,7 +117,7 @@ export default class HomePage extends Component {
                         </div>
                     </div>
                     <div className='home-column'>
-                        <h2>My Community</h2>
+                        <h2>My Community<span>{communitySearch.length ? communitySearch.length : communityList.length}</span></h2>
                         <div className='column-box'>
                             <form>
                                 <input
@@ -132,7 +132,7 @@ export default class HomePage extends Component {
                         </div>
                     </div>
                     <div className='home-column'>
-                        <h2>My World</h2>
+                        <h2>My World<span>{worldSearch.length ? worldSearch.length : worldList.length}</span></h2>
                         <div className='column-box'>
                             <form>
                                 <input
