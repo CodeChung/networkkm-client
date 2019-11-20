@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import { Section } from '../../components/Utils/Utils'
 import './HomePage.css'
 import NetworkApiService from '../../services/network-api-service'
-import Checkbox from '../../components/Utils/Checkbox'
+import Modal from '../../components/Modal/Modal'
+
 
 export default class HomePage extends Component {
     static defaultProps = {
@@ -15,7 +16,9 @@ export default class HomePage extends Component {
 
     state = {
         loading: true,
-        addFriends: [],
+        addFriendsCommunity: [],
+        addFriendsWorld: [],
+        pendingFriends: [],
         friends: [],
         friendList: [],
         community: [],
@@ -25,14 +28,15 @@ export default class HomePage extends Component {
         searchFriend: '',
         searchCommunity: '',
         searchWorld: '',
+        modalOpen: false,
     }
 
     componentDidMount() {
         NetworkApiService.getFriends()
             .then(network => {
                 let friendList = network.friends.map(user => this.userToList(user))
-                let communityList = network.community.map(user => this.userToList(user))
-                let worldList = network.world.map(user => this.userToList(user))
+                let communityList = network.community.map((user, index) => this.userToList(user, 'community', index))
+                let worldList = network.world.map((user, index) => this.userToList(user, 'world', index))
 
                 this.setState({
                     friends: network.friends,
@@ -44,31 +48,47 @@ export default class HomePage extends Component {
                     loading: false
                 })
             })
-            .catch(err => console.alert(err))
+            .catch(err => console.log(err))
     }
 
-    userToList(user) {
+    toggleModal = () => {
+        this.setState({ modalOpen: !this.state.modalOpen })
+    }
+
+    userToList(user, list, index) {
+        // Converts user json object to JSX
         return (
-            <div>
+            <div key={user.id}>
                 <label>
                     <Link to={`/user/${user.id}`}>{`${user.first_name} ${user.last_name}`}</Link>
-                    <input onChange={() => this.toggleAddFriend(user.id)} type='checkbox' key={user.id} />
+                    <input onChange={() => this.toggleAddFriend(user, list, index)} type='checkbox' key={user.id} />
                 </label>
             </div>
         )
     }
 
-    toggleAddFriend = (userId) => {
-        const { addFriends } = this.state
-        const index = addFriends.findIndex(friend => userId === friend) 
+    toggleAddFriend = (user, list, indexNumber) => {
+        // when you click on checkbox, it adds user object to potential add list
+        const { addFriendsCommunity, addFriendsWorld } = this.state
+        const index = list === 'community' 
+            ? addFriendsCommunity.findIndex(friend => user.id === friend.id) 
+            : addFriendsWorld.findIndex(friend => user.id === friend.id)
 
-        if (index < 0) {
-            addFriends.push(userId)
+        if (list === 'community') {
+            if (index < 0) {
+                addFriendsCommunity.push({ user, indexNumber })
+            } else {
+                addFriendsCommunity.splice(index, 1)
+            }
         } else {
-            addFriends.splice(index, 1)
+            if (index < 0) {
+                addFriendsWorld.push({ user, indexNumber })
+            } else {
+                addFriendsWorld.splice(index, 1)
+            }
         }
 
-        this.setState({ addFriends })
+        this.setState({ addFriendsCommunity, addFriendsWorld })
     }
 
     handleSearchPeople = (event) => {
@@ -86,13 +106,39 @@ export default class HomePage extends Component {
         this.setState({ searchWorld: event.target.value })
     }
 
+    sendRequests = () => {
+        let { pendingFriends, addFriendsCommunity, addFriendsWorld, community, world, } = this.state
+        let newCommunity = []
+        let newWorld = []
+        
+        community.forEach(friend => {
+            if (addFriendsCommunity.find(user => friend.id === user.id) === -1) {
+                newCommunity.push(friend)
+            }
+        })
+
+        world.forEach(friend => {
+            if (addFriendsWorld.find(user => user.id === friend.id) === -1) {
+                newWorld.push(friend)
+            }
+        })
+
+        this.setState({ 
+            pendingFriends: [...pendingFriends, ...addFriendsCommunity, ...addFriendsWorld], 
+            addFriendsCommunity: [],
+            addFriendsWorld: [],
+            community: newCommunity, 
+            world: newWorld,
+        })
+    }
+
     render() {
         const { 
-            addFriends,
+            addFriendsCommunity, addFriendsWorld, pendingFriends,
             friends, friendList, community, 
             communityList, world, worldList, 
             loading, searchFriend, searchCommunity, 
-            searchWorld, 
+            searchWorld, modalOpen,
         } = this.state
 
         const friendSearch = searchFriend
@@ -125,7 +171,7 @@ export default class HomePage extends Component {
                         </div>
                     </div>
                     <div className='home-column'>
-                        <h2>My People<span className='col-count'>{friendSearch.length ? friendSearch.length : friendList.length}</span></h2>
+                        <h2>My Network<span className='col-count'>{friendSearch.length ? friendSearch.length : friendList.length}</span></h2>
                         <div className='column-box'>
                             <form>
                                 <input
@@ -135,7 +181,7 @@ export default class HomePage extends Component {
                                 <button>Search</button>
                             </form>
                             <h3>Pending</h3>
-                            {addFriends}
+                            {pendingFriends.map(friend => this.userToList(friend.user))}
                             <ul></ul>
                             <h3>Friends</h3>
                             <form>
@@ -183,8 +229,16 @@ export default class HomePage extends Component {
                         </div>
                     </div>
                 </section>
-                <button>Invite Members</button>
-                <button>Search Members</button>
+                <Modal close={this.toggleModal} active={modalOpen}>
+                    yabba
+                </Modal>
+                <button onClick={this.toggleModal}>Add Members To <br/> Your Network</button>
+                <button>Search For Someone <br/> Within The Network</button>
+                {(!!addFriendsCommunity.length || !!addFriendsWorld.length) && 
+                    <div className='add-friends'>
+                        <button onClick={this.sendRequests}>Add Friends</button>
+                    </div>
+                }
             </Section>
         )
     }

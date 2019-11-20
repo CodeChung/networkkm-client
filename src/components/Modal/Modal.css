@@ -1,0 +1,36 @@
+.modal {
+    position: absolute;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.close-modal {
+    background: rgba(0, 0, 0, 0.397);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.open-modal {
+    background: chartreuse;
+    width: 70%;
+    height: 70%;
+    border-radius: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-backdrop {
+    position: fixed;
+    width: 70%;
+    height: 70%;
+}

@@ -57,7 +57,9 @@ const NetworkApiService = {
                     : res.json()
             )
     },
-
+    addFriends(friendIds) {
+        
+    },
 }
 
 export default NetworkApiService
