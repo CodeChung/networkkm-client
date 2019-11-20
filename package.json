@@ -20,7 +20,8 @@
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "2.1.4"
+    "react-scripts": "2.1.4",
+    "styled-components": "^4.4.1"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Section } from '../../components/Utils/Utils'
 import './HomePage.css'
 import NetworkApiService from '../../services/network-api-service'
+import Checkbox from '../../components/Utils/Checkbox'
 
 export default class HomePage extends Component {
     static defaultProps = {
@@ -14,6 +15,7 @@ export default class HomePage extends Component {
 
     state = {
         loading: true,
+        addFriends: [],
         friends: [],
         friendList: [],
         community: [],
@@ -46,7 +48,27 @@ export default class HomePage extends Component {
     }
 
     userToList(user) {
-        return <li key={user.id}><Link to={`/user/${user.id}`}>{`${user.first_name} ${user.last_name}`}</Link></li>
+        return (
+            <div>
+                <label>
+                    <Link to={`/user/${user.id}`}>{`${user.first_name} ${user.last_name}`}</Link>
+                    <input onChange={() => this.toggleAddFriend(user.id)} type='checkbox' key={user.id} />
+                </label>
+            </div>
+        )
+    }
+
+    toggleAddFriend = (userId) => {
+        const { addFriends } = this.state
+        const index = addFriends.findIndex(friend => userId === friend) 
+
+        if (index < 0) {
+            addFriends.push(userId)
+        } else {
+            addFriends.splice(index, 1)
+        }
+
+        this.setState({ addFriends })
     }
 
     handleSearchPeople = (event) => {
@@ -66,6 +88,7 @@ export default class HomePage extends Component {
 
     render() {
         const { 
+            addFriends,
             friends, friendList, community, 
             communityList, world, worldList, 
             loading, searchFriend, searchCommunity, 
@@ -102,7 +125,7 @@ export default class HomePage extends Component {
                         </div>
                     </div>
                     <div className='home-column'>
-                        <h2>My People<span>{friendSearch.length ? friendSearch.length : friendList.length}</span></h2>
+                        <h2>My People<span className='col-count'>{friendSearch.length ? friendSearch.length : friendList.length}</span></h2>
                         <div className='column-box'>
                             <form>
                                 <input
@@ -111,13 +134,17 @@ export default class HomePage extends Component {
                                     placeholder='Search People' />
                                 <button>Search</button>
                             </form>
-                            <ul>
+                            <h3>Pending</h3>
+                            {addFriends}
+                            <ul></ul>
+                            <h3>Friends</h3>
+                            <form>
                                 {friendSearch.length ? friendSearch : friendList}
-                            </ul>
+                            </form>
                         </div>
                     </div>
                     <div className='home-column'>
-                        <h2>My Community<span>{communitySearch.length ? communitySearch.length : communityList.length}</span></h2>
+                        <h2>My Community<span className='col-count'>{communitySearch.length ? communitySearch.length : communityList.length}</span></h2>
                         <div className='column-box'>
                             <form>
                                 <input
@@ -126,13 +153,13 @@ export default class HomePage extends Component {
                                     placeholder='Search Community' />
                                 <button>Search</button>
                             </form>
-                            <ul>
+                            <form>
                                 {communitySearch.length ? communitySearch : communityList}
-                            </ul>
+                            </form>
                         </div>
                     </div>
                     <div className='home-column'>
-                        <h2>My World<span>{worldSearch.length ? worldSearch.length : worldList.length}</span></h2>
+                        <h2>My World<span className='col-count'>{worldSearch.length ? worldSearch.length : worldList.length}</span></h2>
                         <div className='column-box'>
                             <form>
                                 <input
@@ -141,9 +168,9 @@ export default class HomePage extends Component {
                                     placeholder='Search World' />
                                 <button>Search</button>
                             </form>
-                            <ul>
+                            <form>
                                 {worldSearch.length ? worldSearch : worldList}
-                            </ul>
+                            </form>
                         </div>
                     </div>
                     <div className='home-column'>
@@ -157,6 +184,7 @@ export default class HomePage extends Component {
                     </div>
                 </section>
                 <button>Invite Members</button>
+                <button>Search Members</button>
             </Section>
         )
     }
