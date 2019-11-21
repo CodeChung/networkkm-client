@@ -1,4 +1,5 @@
 import React from 'react'
+import NetworkApiService from '../../services/network-api-service'
 
 class NetworkSearch extends React.Component {
     state = {
@@ -8,8 +9,15 @@ class NetworkSearch extends React.Component {
     handleSearchInput = (event) => {
         this.setState({ search: event.target.value })
     }
-    handleSearchSubmit = () => {
-
+    handleSearchSubmit = (event) => {
+        event.preventDefault()
+        const { search } = this.state
+        console.log('searching for ', search)
+        NetworkApiService.findUser(search)
+            .then(results => {
+                this.setState({ results, search: '' })
+            })
+            .catch(res => console.log(res))
     }
     render() {
         return (
@@ -18,7 +26,7 @@ class NetworkSearch extends React.Component {
                     onChange={(event) => this.handleSearchInput(event)} 
                     value={this.state.search} 
                     placeholder='Search for a Friend within the Network' />
-                <button>Search</button>
+                <button onClick={(e) => this.handleSearchSubmit(e)}>Search</button>
                 {this.state.results}
             </div>
         )

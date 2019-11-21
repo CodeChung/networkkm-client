@@ -30,6 +30,14 @@ const NetworkApiService = {
                     : res.json()
             )
     },
+    findUser(user) {
+        return fetch(`${config.API_ENDPOINT}/friends/search/${user}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+    },
     getUser() {
         return fetch(`${config.API_ENDPOINT}/friends/identify`, {
             headers: {
