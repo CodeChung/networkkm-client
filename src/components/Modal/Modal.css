@@ -20,7 +20,7 @@
 }
 
 .open-modal {
-    background: chartreuse;
+    background: rgb(216, 255, 177);
     width: 70%;
     height: 70%;
     border-radius: 5px;
@@ -33,4 +33,7 @@
     position: fixed;
     width: 70%;
     height: 70%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
