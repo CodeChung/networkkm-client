@@ -10,6 +10,7 @@ import RegistrationPage from '../../routes/RegistrationPage/RegistrationPage'
 import NotFoundPage from '../../routes/NotFoundPage/NotFoundPage'
 import './App.css'
 import HomePage from '../../routes/HomePage/HomePage'
+import InvitePage from '../../routes/InvitePage/InvitePage'
 
 class App extends Component {
   state = { hasError: false }
@@ -48,6 +49,10 @@ class App extends Component {
             <Route
               path={'/thing/:thingId'}
               component={ThingPage}
+            />
+            <Route
+              path={'/invite'}
+              component={InvitePage}
             />
             <Route
               component={NotFoundPage}

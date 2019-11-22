@@ -66,7 +66,7 @@ export default class ThingListPage extends Component {
           <br/>
           Keep your family & friends updated on your life.
           <br/>
-          Hundreds of programs are available to send meaningful information to only the friends and familuy members you want to share your life with.
+          Hundreds of programs are available to send meaningful information to only the friends and family members you want to share your life with.
           <br/>
           You now have the ability to chose the people in your life you want to share you information with by chosing on or all of you family and friends.
           <br/>
