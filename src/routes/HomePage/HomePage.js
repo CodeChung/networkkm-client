@@ -21,6 +21,7 @@ export default class HomePage extends Component {
         loading: true,
         modalOpen: false,
         openSearch: false,
+        newFriend: null,
     }
 
     componentDidMount() {
@@ -88,6 +89,10 @@ export default class HomePage extends Component {
         this.setState({ openSearch: !this.state.openSearch })
     }
 
+    passFriend = (friend) => {
+        this.setState({ newFriend: friend })
+    }
+
     render() {
         const { 
             loading, modalOpen, openSearch
@@ -98,9 +103,9 @@ export default class HomePage extends Component {
         }
         return (
             <Section className='HomePage'>
-                <NetworkColumns />
+                <NetworkColumns newFriend={this.state.newFriend} />
                 <Modal close={this.toggleModal} active={modalOpen}>
-                    <Invitation />
+                    <Invitation addFriend={(friend) => this.passFriend(friend)} />
                 </Modal>
                 <Modal close={this.toggleSearch} active={openSearch}>
                     <NetworkSearch />

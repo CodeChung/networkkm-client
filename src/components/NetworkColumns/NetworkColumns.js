@@ -1,6 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import NetworkApiService from '../../services/network-api-service'
+import { debug } from 'util'
+import PendingRequests from './PendingRequests'
 
 class NetworkColumns extends React.Component {
     state = {
@@ -117,6 +119,10 @@ class NetworkColumns extends React.Component {
         })
     }
 
+    requestsToList(list) {
+        return list.map(item => <li key={item.id}>{item.first_name} {item.last_name}</li>)
+    }
+
     render() {
         const { 
             addFriendsCommunity, addFriendsWorld,
@@ -162,6 +168,8 @@ class NetworkColumns extends React.Component {
                             <button>Search</button>
                         </form>
                         <h3>Pending</h3>
+                        <PendingRequests />
+                        {!!this.props.newFriend && this.userToList(this.props.newFriend)}
                         {pendingFriends.map(friend => this.userToList(friend.user))}
                         <ul></ul>
                         <h3>Friends</h3>
