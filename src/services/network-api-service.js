@@ -66,7 +66,21 @@ const NetworkApiService = {
             )
     },
     addFriends(friendIds) {
-        
+
+    },
+    sendEmailInvite() {
+        return fetch(`${config.API_ENDPOINT}/messages`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${TokenService.getAuthToken()}`
+            }
+        })
+            .then(res =>
+                (!res.ok)
+                    ? res.json().then(e => Promise.reject(e))
+                    : res.json()
+            )
     },
 }
 

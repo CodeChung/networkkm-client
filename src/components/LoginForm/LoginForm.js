@@ -22,7 +22,7 @@ export default class LoginForm extends Component {
         TokenService.saveAuthToken(res.authToken)
         this.props.onLogin()
       })
-      .catch(res => console.log(res))
+      .catch(res => this.setState({ error: res.error }))
 
     email.value = ''
     password.value = ''
@@ -36,9 +36,6 @@ export default class LoginForm extends Component {
         onSubmit={this.handleSubmitBasicAuth}
       >
         <legend>Login</legend>
-        <div role='alert'>
-          {error && <p className='red'>{error}</p>}
-        </div>
         <div className='email'>
           <label htmlFor='LoginForm__email'>
             Email
@@ -68,6 +65,9 @@ export default class LoginForm extends Component {
         <Button >
           Forgot Password
         </Button>
+        <div role='alert'>
+          {error && <p className='red'>{error}</p>}
+        </div>
       </form>
     )
   }

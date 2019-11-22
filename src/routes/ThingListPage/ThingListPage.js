@@ -35,20 +35,20 @@ export default class ThingListPage extends Component {
     )
   }
 
-  redirectSuccessfulRegistration = (user) => {
-    console.log(user)
-
+  redirectSuccessfulRegistration = (user, password) => {
+    console.log('passwor', password)
     const userLogin = {
       email: user.email,
-      password: user.password
+      password: password
     }
 
     NetworkApiService.loginUser(userLogin)
       .then(res => {
+        console.log('new user', res)
         TokenService.saveAuthToken(res.authToken)
         this.login()
       })
-    .catch(res => console.lorg(res))
+    .catch(res => console.log(res))
   }
 
   render() {

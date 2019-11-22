@@ -12,9 +12,10 @@ class NetworkSearch extends React.Component {
     handleSearchSubmit = (event) => {
         event.preventDefault()
         const { search } = this.state
-        console.log('searching for ', search)
+        debugger
         NetworkApiService.findUser(search)
             .then(results => {
+                console.log(results)
                 this.setState({ results, search: '' })
             })
             .catch(res => console.log(res))

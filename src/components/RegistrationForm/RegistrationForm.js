@@ -4,7 +4,7 @@ import NetworkApiService from '../../services/network-api-service'
 
 export default class RegistrationForm extends Component {
   static defaultProps = {
-    onRegistrationSuccess: () => { }
+    onRegistraticcess: () => { }
   }
 
   state = { error: null }
@@ -12,6 +12,8 @@ export default class RegistrationForm extends Component {
   handleSubmit = ev => {
     ev.preventDefault()
     const { first_name, email, last_name, password } = ev.target
+
+    let newPassword = password.value
 
     const user = {
       first_name: first_name.value,
@@ -23,9 +25,9 @@ export default class RegistrationForm extends Component {
     NetworkApiService.registerUser(user)
       .then(newUser => {
         newUser.password = password.value
-        this.props.onSuccessfulRegistration(newUser)
+        this.props.onSuccessfulRegistration(newUser, newPassword)
       })
-      .catch(err => console.log(`ERROR `, err))
+      .catch(err => this.setState({ error: err.error }))
 
     first_name.value = ''
     email.value = ''
@@ -41,9 +43,6 @@ export default class RegistrationForm extends Component {
         onSubmit={this.handleSubmit}
       >
         <legend>Join Now</legend>
-        <div role='alert'>
-          {error && <p className='red'>{error}</p>}
-        </div>
         <div className='first_name'>
           <label htmlFor='RegistrationForm__first_name'>
             First name <Required />
@@ -105,6 +104,9 @@ export default class RegistrationForm extends Component {
         <Button type='submit'>
           Register
         </Button>
+        <div role='alert'>
+          {error && <p className='red'>{error}</p>}
+        </div>
       </form>
     )
   }

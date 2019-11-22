@@ -1,5 +1,7 @@
 import React from 'react'
 import InvitationForm from './InvitationForm'
+import NetworkApiService from '../../services/network-api-service'
+import MessageTemplates from './MessageTemplates'
 
 class Invitation extends React.Component {
     state = {
@@ -9,7 +11,7 @@ class Invitation extends React.Component {
         this.setState({ invites: [...this.state.invites, <InvitationForm/>] })
     }
     sendInvitations = () => {
-
+        NetworkApiService.sendEmailInvite()
     }
     render() {
         return (
@@ -17,7 +19,8 @@ class Invitation extends React.Component {
                 <h2>Invite New Members</h2>
                 {this.state.invites}
                 <button onClick={this.addInvitation}>Insert New Row</button>
-                <button>Choose from One of 5 Messages</button>
+                <button onClick={this.sendInvitations}>Choose from One of 5 Messages</button>
+                <MessageTemplates />
             </div>
         )
     }
