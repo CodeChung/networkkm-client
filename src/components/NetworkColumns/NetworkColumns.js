@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import NetworkApiService from '../../services/network-api-service'
 import { debug } from 'util'
 import PendingRequests from './PendingRequests'
+import FriendRequests from './FriendRequests'
 
 class NetworkColumns extends React.Component {
     state = {
@@ -152,6 +153,7 @@ class NetworkColumns extends React.Component {
                 <div className='home-column'>
                     <h2>Alerts</h2>
                     <div className='column-box'>
+                        <FriendRequests />
                         <ul>
                             <li>See Pictures</li>
                         </ul>

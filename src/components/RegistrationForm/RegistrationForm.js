@@ -7,7 +7,17 @@ export default class RegistrationForm extends Component {
     onRegistraticcess: () => { }
   }
 
-  state = { error: null }
+  state = { 
+    first: '',
+    last: '',
+    email: '',
+    error: null 
+  }
+  
+  componentDidMount() {
+    const { first, last, email } = this.props
+    this.setState({ first, last, email })
+  }
 
   handleSubmit = ev => {
     ev.preventDefault()
@@ -36,7 +46,7 @@ export default class RegistrationForm extends Component {
   }
 
   render() {
-    const { error } = this.state
+    const { first, last, email, error } = this.state
     return (
       <form
         className='RegistrationForm'
@@ -48,6 +58,7 @@ export default class RegistrationForm extends Component {
             First name <Required />
           </label>
           <Input
+            value={first}
             name='first_name'
             type='text'
             required
@@ -59,6 +70,7 @@ export default class RegistrationForm extends Component {
             Last name <Required />
           </label>
           <Input
+            value={last}
             name='last_name'
             type='text'
             required
@@ -70,6 +82,7 @@ export default class RegistrationForm extends Component {
             Email
           </label>
           <Input
+            value={email}
             name='email'
             type='text'
             required

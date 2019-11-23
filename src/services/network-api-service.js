@@ -18,6 +18,20 @@ const NetworkApiService = {
                     : res.json()
             )
     },
+    checkFriendRequests() {
+        return fetch(`${config.API_ENDPOINT}/users/requests`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${TokenService.getAuthToken()}`
+            },
+        })
+            .then(res =>
+                (!res.ok)
+                    ? res.json().then(e => Promise.reject(e))
+                    : res.json()
+            )
+    },
     registerUser(user) {
         return fetch(`${config.API_ENDPOINT}/users`, {
             method: 'POST',
@@ -53,6 +67,24 @@ const NetworkApiService = {
                 'Content-Type': 'application/json'
             },
         })
+            .then(res =>
+                (!res.ok)
+                    ? res.json().then(e => Promise.reject(e))
+                    : res.json()
+            )
+    },
+    findUserById(id) {
+        return fetch((`${config.API_ENDPOINT}/users/id/${id}`), {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+        })
+            .then(res =>
+                (!res.ok)
+                    ? res.json().then(e => Promise.reject(e))
+                    : res.json()
+            )
     },
     getUser() {
         return fetch(`${config.API_ENDPOINT}/friends/identify`, {
