@@ -16,6 +16,9 @@ class Profile extends React.Component {
     toggleForm = () => {
         this.setState({ openForm: !this.state.openForm })
     }
+    submitForm = (event) => {
+        event.preventDefault()
+    }
     render() {
         const { loading, user, openForm } = this.state
         if (loading) {
@@ -39,7 +42,7 @@ class Profile extends React.Component {
                     </div>
                     <Modal close={this.toggleForm} active={openForm}>
                         <button className='profile-form-close' onClick={this.toggleForm}>Close</button>
-                        <form className='profile-form'>
+                        <form onSubmit={(e) => this.submitForm(e)} className='profile-form'>
                             <label>
                                 Address
                                 <input />
@@ -60,6 +63,7 @@ class Profile extends React.Component {
                                 Cell Phone
                                 <input />
                             </label>
+                            <button>Save</button>
                         </form>
                     </Modal>
                 </div>

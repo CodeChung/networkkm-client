@@ -11,6 +11,7 @@ import NotFoundPage from '../../routes/NotFoundPage/NotFoundPage'
 import './App.css'
 import HomePage from '../../routes/HomePage/HomePage'
 import InvitePage from '../../routes/InvitePage/InvitePage'
+import BlogPage from '../../routes/BlogPage/BlogPage'
 
 class App extends Component {
   state = { hasError: false }
@@ -37,6 +38,10 @@ class App extends Component {
             <Route
               path='/home'
               component={HomePage}
+            />
+            <Route
+              path='/blog'
+              component={BlogPage}
             />
             <Route
               path={'/login'}

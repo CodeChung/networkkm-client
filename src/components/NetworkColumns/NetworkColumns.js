@@ -4,6 +4,7 @@ import NetworkApiService from '../../services/network-api-service'
 import { debug } from 'util'
 import PendingRequests from './PendingRequests'
 import FriendRequests from './FriendRequests'
+import { Button } from '../Utils/Utils'
 
 class NetworkColumns extends React.Component {
     state = {
@@ -214,8 +215,9 @@ class NetworkColumns extends React.Component {
                     <h2>Programs</h2>
                     <div className='column-box'>
                         <ul>
-                            <li>Photos</li>
-                            <li>Events</li>
+                            <li><Button onClick={this.props.openBlog}>Blog</Button></li>
+                            <li><Link to='/'><Button>Events</Button></Link></li>
+                            <li><Link to='/'><Button>Groups</Button></Link></li>
                         </ul>
                     </div>
                 </div>

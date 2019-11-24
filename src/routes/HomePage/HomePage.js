@@ -8,6 +8,7 @@ import Invitation from '../../components/Invitation/Invitation'
 import NetworkSearch from '../../components/NetworkSearch/NetworkSearch'
 import NetworkColumns from '../../components/NetworkColumns/NetworkColumns'
 import Profile from '../../components/Profile/Profile'
+import Blog from '../../components/Blog/Blog'
 
 
 export default class HomePage extends Component {
@@ -23,28 +24,11 @@ export default class HomePage extends Component {
         modalOpen: false,
         openSearch: false,
         newFriend: null,
-        openProfile: false,
+        openBlog: false,
         currentProfile: null,
     }
 
     componentDidMount() {
-        // NetworkApiService.getFriends()
-        //     .then(network => {
-        //         let friendList = network.friends.map(user => this.userToList(user))
-        //         let communityList = network.community.map((user, index) => this.userToList(user, 'community', index))
-        //         let worldList = network.world.map((user, index) => this.userToList(user, 'world', index))
-
-        //         this.setState({
-        //             friends: network.friends,
-        //             friendList,
-        //             community: network.community,
-        //             communityList,
-        //             world: network.world,
-        //             worldList,
-        //             loading: false
-        //         })
-        //     })
-        //     .catch(err => console.log(err))
         this.setState({ loading: false })
     }
 
@@ -88,6 +72,10 @@ export default class HomePage extends Component {
         this.setState({ addFriendsCommunity, addFriendsWorld })
     }
 
+    toggleBloggle = () => {
+        this.setState({ openBlog: !this.state.openBlog })
+    }
+
     toggleSearch = () => {
         this.setState({ openSearch: !this.state.openSearch })
     }
@@ -103,10 +91,10 @@ export default class HomePage extends Component {
     setProfile = (id) => {
         this.setState({ currentProfile: id })
     }
-
+    
     render() {
         const { 
-            loading, modalOpen, openSearch, openProfile, currentProfile
+            loading, modalOpen, openSearch, openBlog, currentProfile
         } = this.state
 
         if (loading) {
@@ -114,7 +102,11 @@ export default class HomePage extends Component {
         }
         return (
             <Section className='HomePage'>
-                <NetworkColumns newFriend={this.state.newFriend} openProfile={this.setProfile} />
+                <NetworkColumns 
+                    newFriend={this.state.newFriend} 
+                    openProfile={this.setProfile} 
+                    openBlog={this.toggleBloggle}
+                />
                 <Modal close={this.toggleModal} active={modalOpen}>
                     <Invitation addFriend={(friend) => this.passFriend(friend)} />
                 </Modal>
@@ -123,6 +115,9 @@ export default class HomePage extends Component {
                 </Modal>
                 <Modal close={this.toggleProfile} active={currentProfile}>
                     <Profile id={currentProfile} />
+                </Modal>
+                <Modal close={this.toggleBloggle} active={openBlog}>
+                    <Blog />
                 </Modal>
                 <button onClick={this.toggleModal}>Add Members To <br/> Your Network</button>
                 <button onClick={this.toggleSearch}>Search For Someone <br/> Within The Network</button>
