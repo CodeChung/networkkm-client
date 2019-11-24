@@ -7,6 +7,7 @@ import Modal from '../../components/Modal/Modal'
 import Invitation from '../../components/Invitation/Invitation'
 import NetworkSearch from '../../components/NetworkSearch/NetworkSearch'
 import NetworkColumns from '../../components/NetworkColumns/NetworkColumns'
+import Profile from '../../components/Profile/Profile'
 
 
 export default class HomePage extends Component {
@@ -22,6 +23,8 @@ export default class HomePage extends Component {
         modalOpen: false,
         openSearch: false,
         newFriend: null,
+        openProfile: false,
+        currentProfile: null,
     }
 
     componentDidMount() {
@@ -89,13 +92,21 @@ export default class HomePage extends Component {
         this.setState({ openSearch: !this.state.openSearch })
     }
 
+    toggleProfile = () => {
+        this.setState({ currentProfile: null })
+    }
+
     passFriend = (friend) => {
         this.setState({ newFriend: friend })
     }
 
+    setProfile = (id) => {
+        this.setState({ currentProfile: id })
+    }
+
     render() {
         const { 
-            loading, modalOpen, openSearch
+            loading, modalOpen, openSearch, openProfile, currentProfile
         } = this.state
 
         if (loading) {
@@ -103,12 +114,15 @@ export default class HomePage extends Component {
         }
         return (
             <Section className='HomePage'>
-                <NetworkColumns newFriend={this.state.newFriend} />
+                <NetworkColumns newFriend={this.state.newFriend} openProfile={this.setProfile} />
                 <Modal close={this.toggleModal} active={modalOpen}>
                     <Invitation addFriend={(friend) => this.passFriend(friend)} />
                 </Modal>
                 <Modal close={this.toggleSearch} active={openSearch}>
                     <NetworkSearch />
+                </Modal>
+                <Modal close={this.toggleProfile} active={currentProfile}>
+                    <Profile id={currentProfile} />
                 </Modal>
                 <button onClick={this.toggleModal}>Add Members To <br/> Your Network</button>
                 <button onClick={this.toggleSearch}>Search For Someone <br/> Within The Network</button>

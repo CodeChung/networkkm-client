@@ -46,9 +46,9 @@ class NetworkColumns extends React.Component {
     userToList(user, list, index) {
         // Converts user json object to JSX
         return (
-            <div key={user.id}>
+            <div className='row-friend' key={user.id}>
                 <label>
-                    <Link to={`/user/${user.id}`}>{`${user.first_name} ${user.last_name}`}</Link>
+                    <li onClick={() => this.props.openProfile(user.id)}>{`${user.first_name} ${user.last_name}`}</li>
                     <input onChange={() => this.toggleAddFriend(user, list, index)} type='checkbox' key={user.id} />
                 </label>
             </div>

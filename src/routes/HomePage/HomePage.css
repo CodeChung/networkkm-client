@@ -60,3 +60,18 @@
     position: absolute;
     right: 13%;
 }
+
+.row-friend {
+    padding: 5px;
+}
+
+.row-friend label {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+}
+
+.row-friend li {
+    text-decoration: none;
+    list-style: none;
+}
