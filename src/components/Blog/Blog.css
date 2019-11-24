@@ -1,6 +1,68 @@
+.blog {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.blog-feed {
+    width: 90%;
+    height: 100%;
+    overflow: scroll;
+}
+
+.blog-block {
+    background: ghostwhite;
+    border-radius: 10px;
+    width: 45%;
+    height: 61.7vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
 .new-blog-post {
     position: absolute;
-    top: 40px;
-    right: 60px;
+    top: 60px;
+    right: 55px;
     width: 150px;
+    border-radius: 10px;
 }
+
+.blog-wrapper {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.wrapper-class {
+    background: rgb(210, 218, 252);
+    height: 470px;
+    width: 90%;
+    border-radius: 2px;;
+}
+
+.editor-class {
+    width: 90%;
+    margin: 0 auto;
+}
+
+.post-title {
+    position: absolute;
+    top: 60px;
+    left: calc(50% + 70px);
+    font-size: 28px;
+}
+
+.post-title input {
+    font-size: 28px;
+    margin-left: 10px;
+}
+
+.save-post {
+    position: absolute;
+    bottom: 50px;
+    width: 200px;
+    z-index: 1000;
+}
+

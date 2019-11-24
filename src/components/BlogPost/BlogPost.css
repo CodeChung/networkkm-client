@@ -1,0 +1,33 @@
+.blog-post {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
+    margin: 10px;
+    border-radius: 3px;
+}
+
+.blog-post-avatar {
+    border-radius: 50%;
+    width: 70px;
+    height: 70px;
+}
+
+.blog-post-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.blog-post-header h2 {
+    font-size: 20px;
+}
+
+.blog-post-header h3 {
+    font-size: 15px;
+}
+
+.blog-post-body {
+    height: 180px;
+}
