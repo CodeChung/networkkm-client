@@ -32,6 +32,24 @@ const NetworkApiService = {
                     : res.json()
             )
     },
+    acceptFriendRequest(friendId) {
+        return fetch(`${config.API_ENDPOINT}/friends/request`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${TokenService.getAuthToken()}`
+            },
+            body: JSON.stringify({
+                friend: friendId,
+                action: 'ACCEPT'
+            })
+        })
+            .then(res =>
+                (!res.ok)
+                    ? res.json().then(e => Promise.reject(e))
+                    : res.json()
+            )
+    },
     registerUser(user) {
         return fetch(`${config.API_ENDPOINT}/users`, {
             method: 'POST',
