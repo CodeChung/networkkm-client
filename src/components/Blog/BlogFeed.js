@@ -23,6 +23,7 @@ class BlogFeed extends React.Component {
                 {error}
                 {posts.map((post, index) => 
                     <BlogPost 
+                        current={this.props.current}
                         id={post.id}
                         setBlog={this.props.setBlog}
                         key={index} 

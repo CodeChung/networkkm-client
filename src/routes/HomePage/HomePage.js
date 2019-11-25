@@ -26,6 +26,7 @@ export default class HomePage extends Component {
         newFriend: null,
         openBlog: false,
         currentProfile: null,
+        user: null,
     }
 
     componentDidMount() {

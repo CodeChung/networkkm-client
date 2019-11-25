@@ -30,7 +30,7 @@ class Blog extends React.Component {
         return (
             <div className='blog'>
                 <div className='blog-block blog-posts'>
-                    <BlogFeed setBlog={this.setCurrentBlog} />
+                    <BlogFeed current={currentPost} setBlog={this.setCurrentBlog} />
                 </div>
                 <div className='blog-block blog-comments'>
                     {

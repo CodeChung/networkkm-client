@@ -190,6 +190,22 @@ const NetworkApiService = {
                     : res.json()
             )
     },
+    submitComment(blogId, comment) {
+        console.log(comment)
+        return fetch(`${config.API_ENDPOINT}/blog/comments/${blogId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${TokenService.getAuthToken()}`
+            },
+            body: JSON.stringify({comment})
+        })
+            .then(res =>
+                (!res.ok)
+                    ? res.json().then(e => Promise.reject(e))
+                    : res.json()
+            )
+    },
 }
 
 export default NetworkApiService

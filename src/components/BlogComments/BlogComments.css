@@ -2,6 +2,31 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     overflow: scroll;
+    padding-left: 80px;
+}
+
+.blog-comments form {
+    margin-top: 20px;
+}
+
+.blog-comment {
+    padding: 8px 0;
+    width: 100%;
+}
+
+.comment-wrapper {
+    display: flex;
+}
+
+.comment-name {
+    font-weight: 700;
+    padding-right: 15px;
+}
+
+.comment-date {
+    text-align: right;
+    margin-top: 5px;
+    color: rgb(182, 182, 182);
 }
