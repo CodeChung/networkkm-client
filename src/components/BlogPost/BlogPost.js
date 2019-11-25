@@ -4,7 +4,7 @@ import './BlogPost.css'
 class BlogPost extends React.Component {
     render() {
         return (
-            <div className='blog-post'>
+            <div className='blog-post' onClick={() => this.props.setBlog(this.props.id)}>
                 <div className='blog-post-header'>
                     <img className='blog-post-avatar' src='https://www.placecage.com/400/400' alt='avatar' />
                     <div className='blog-post-title'>

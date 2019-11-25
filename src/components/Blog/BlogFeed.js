@@ -9,10 +9,10 @@ class BlogFeed extends React.Component {
         error: '',
     }
     componentDidMount() {
-        debugger
         NetworkApiService.getUserBlog()
             .then(posts => {
                 this.setState({ posts })
+                this.props.setBlog(posts[0].id)
             })
             .catch(res => this.setState({ error: res.error }))
     }
@@ -23,6 +23,8 @@ class BlogFeed extends React.Component {
                 {error}
                 {posts.map((post, index) => 
                     <BlogPost 
+                        id={post.id}
+                        setBlog={this.props.setBlog}
                         key={index} 
                         title={post.title}
                         date={post.date}
