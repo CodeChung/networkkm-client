@@ -4,6 +4,7 @@
     align-items: flex-start;
     width: 80%;
     height: 90%;
+    overflow: hidden;
 }
 
 .profile-name {
@@ -13,6 +14,13 @@
 
 .profile-blog {
     flex: 2;
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.profile-blog-container {
+    overflow-y: scroll;
+    height: auto;
 }
 
 .profile-form {

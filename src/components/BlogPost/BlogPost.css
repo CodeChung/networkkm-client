@@ -39,4 +39,9 @@
 
 .blog-post-body {
     height: 180px;
+    transition: .4s;
+}
+
+.blog-post-active {
+    height: 360px;
 }

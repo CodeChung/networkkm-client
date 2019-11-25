@@ -3,7 +3,14 @@ import './BlogPost.css'
 import { Button } from '../Utils/Utils'
 
 class BlogPost extends React.Component {
+    state = {
+        large: false
+    }
+    toggleLarge = () => {
+        this.setState({ large: !this.state.large})
+    }
     render() {
+        const { large } = this.state
         return (
             <div className={this.props.current === this.props.id ? 'blog-post current-blog' : 'blog-post'} onClick={() => this.props.setBlog(this.props.id)}>
                 <div className='blog-post-header'>
@@ -13,10 +20,10 @@ class BlogPost extends React.Component {
                         <h3>{(new Date(this.props.date)).toDateString()}</h3>
                     </div>
                 </div>
-                <div className='blog-post-body'>
+                <div className={large ? 'blog-post-body blog-post-active' : 'blog-post-body'}>
                     {this.props.html}
                 </div>
-                <Button>Read More</Button>
+                <Button onClick={this.toggleLarge}>{large ? 'Show Less' : 'Read More'}</Button>
             </div>
         )
     }

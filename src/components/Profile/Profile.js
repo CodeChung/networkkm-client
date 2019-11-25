@@ -2,17 +2,27 @@ import React from 'react'
 import Modal from '../Modal/Modal'
 import './Profile.css'
 import NetworkApiService from '../../services/network-api-service'
+import BlogPost from '../BlogPost/BlogPost'
+import { debug } from 'util'
 
 class Profile extends React.Component {
     state = {
         user: null,
         loading: true,
         openForm: false,
+        posts: [],
+        error: '',
+        curentBlog: null,
     }
     componentDidMount() {
         NetworkApiService.findUserById(this.props.id)
-            .then(user => this.setState({ user, loading: false }))
-        // NetworkApiService.getUserBlog()
+            .then(user => {
+                NetworkApiService.getBlogByUser(user.id)
+                    .then(posts => {
+                        this.setState({ posts, user, loading: false })
+                    })
+                    .catch(res => this.setState({ error: res.error }))
+            })
     }
     toggleForm = () => {
         this.setState({ openForm: !this.state.openForm })
@@ -20,8 +30,11 @@ class Profile extends React.Component {
     submitForm = (event) => {
         event.preventDefault()
     }
+    setCurrentBlog = (blogId) => {
+        this.setState({ currentBlog: blogId })
+    }
     render() {
-        const { loading, user, openForm } = this.state
+        const { currentBlog, loading, user, openForm, posts } = this.state
         if (loading) {
             return (<div></div>)
         }
@@ -35,7 +48,19 @@ class Profile extends React.Component {
                     </div>
                     <div className='profile-blog'>
                         <h2>{user.first_name}'s Blog</h2>
-                        This user has no posts yet :(
+                        <div className='profile-blog-container'>
+                            {posts.map((post, index) =>
+                                <BlogPost
+                                    current={currentBlog}
+                                    id={post.id}
+                                    setBlog={this.setCurrentBlog}
+                                    key={index}
+                                    title={post.title}
+                                    date={post.date}
+                                    html={post.html}
+                                />
+                            )}
+                        </div>
                     </div>
                     <div className='profile-events'>
                         <h2>{user.last_name}'s Events</h2>
