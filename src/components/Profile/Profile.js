@@ -12,6 +12,7 @@ class Profile extends React.Component {
     componentDidMount() {
         NetworkApiService.findUserById(this.props.id)
             .then(user => this.setState({ user, loading: false }))
+        // NetworkApiService.getUserBlog()
     }
     toggleForm = () => {
         this.setState({ openForm: !this.state.openForm })
