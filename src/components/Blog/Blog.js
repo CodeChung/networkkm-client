@@ -6,12 +6,17 @@ import '../../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css'
 import './Blog.css'
 import BlogFeed from './BlogFeed'
 import BlogComments from '../BlogComments/BlogComments'
+import NetworkApiService from '../../services/network-api-service'
+import { convertFromRaw } from 'draft-js'
 
+
+const content = {"entityMap":{},"blocks":[{"key":"637gr","text":"Initialized from content state.","type":"unstyled","depth":0,"inlineStyleRanges":[],"entityRanges":[],"data":{}}]};
 
 class Blog extends React.Component {
     state = {
         newPost: false,
         currentPost: null,
+        contentState: convertFromRaw(content)
     }
     toggleNewPost = () => {
         this.setState({ newPost: !this.state.newPost })
@@ -24,8 +29,27 @@ class Blog extends React.Component {
     setCurrentBlog = (blogId) => {
         this.setState({ currentPost: blogId })
     }
+    publishPost = () => {
+        const newBlog = {
+            author: 1,
+            title: 'new title',
+            html: this.state.contentState,
+            readers: []
+        }
+        NetworkApiService.publishBlogPost()
+            .then(newPost => {
+                debugger
+            })
+            .catch(res => this.setState({ error: res.error }))
+    }
+    handleTitle = (e) => {
+        this.setState({ title: e.target.value})
+    }
+    onContentStateChange = (contentState) => {
+        this.setState({ contentState })
+    }
     render() {
-        const { newPost, currentPost } = this.state
+        const { newPost, currentPost, title } = this.state
         const blogComments = currentPost ? <BlogComments blogId={currentPost} /> : ''
         return (
             <div className='blog'>
@@ -39,14 +63,15 @@ class Blog extends React.Component {
                         <div className='blog-wrapper' onKeyDown={this.handleTabs}>
                             <label className='post-title'>
                                 Title
-                                <input />
+                                <input value={title} onChange={(e) => this.handleTitle(e)}/>
                             </label>
                             <Editor 
+                                onContentStateChange={this.onContentStateChange}
                                 wrapperClassName="wrapper-class"
                                 editorClassName="editor-class"
                                 toolbarClassName="toolbar-class"
                             /> 
-                            <Button className='save-post'>Save</Button>
+                            <Button onClick={this.publishPost} className='save-post'>Save</Button>
                         </div>
                         : 
                         blogComments

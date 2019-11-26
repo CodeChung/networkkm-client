@@ -82,7 +82,8 @@ const NetworkApiService = {
         return fetch(`${config.API_ENDPOINT}/friends/search/${user}`, {
             method: 'GET',
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${TokenService.getAuthToken()}`
             },
         })
             .then(res =>
@@ -197,6 +198,21 @@ const NetworkApiService = {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${TokenService.getAuthToken()}`
             }
+        })
+            .then(res =>
+                (!res.ok)
+                    ? res.json().then(e => Promise.reject(e))
+                    : res.json()
+            )
+    },
+    publishBlogPost(blog) {
+        return fetch(`${config.API_ENDPOINT}/blog`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${TokenService.getAuthToken()}`
+            },
+            body: JSON.stringify(blog)
         })
             .then(res =>
                 (!res.ok)

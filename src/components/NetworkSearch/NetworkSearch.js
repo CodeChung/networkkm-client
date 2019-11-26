@@ -5,6 +5,7 @@ class NetworkSearch extends React.Component {
     state = {
         search: '',
         results: [],
+        error: '',
     }
     handleSearchInput = (event) => {
         this.setState({ search: event.target.value })
@@ -18,17 +19,18 @@ class NetworkSearch extends React.Component {
                 console.log(results)
                 this.setState({ results, search: '' })
             })
-            .catch(res => console.log(res))
+            .catch(res =>this.setState({ error: res.error }))
     }
     render() {
         return (
-            <div>
+            <div className='network-search'>
+                {this.state.error}
                 <input
                     onChange={(event) => this.handleSearchInput(event)} 
                     value={this.state.search} 
                     placeholder='Search for a Friend within the Network' />
                 <button onClick={(e) => this.handleSearchSubmit(e)}>Search</button>
-                {this.state.results}
+                {JSON.stringify(this.state.results)}
             </div>
         )
     }
