@@ -55,7 +55,7 @@ class Invitation extends React.Component {
         return (
             <div className='invitation'>
                 <h2>Invite New Members</h2>
-                {/* <form>
+                <form>
                     {rows.map((row, ind) => 
                         <InvitationForm 
                             key={ind} 
@@ -66,7 +66,7 @@ class Invitation extends React.Component {
                             active={this.state.send}
                         />
                     )}
-                </form> */}
+                </form>
                 <form>
                     <input onChange={(e) => this.handleFirst(e)} placeholder='First Name' value={first} />
                     <input onChange={(e) => this.handleLast(e)} placeholder='Last Name' value={last} />

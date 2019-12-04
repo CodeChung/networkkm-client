@@ -36,9 +36,10 @@ class Blog extends React.Component {
             html: this.state.contentState,
             readers: []
         }
-        NetworkApiService.publishBlogPost()
+        console.log(newBlog)
+        NetworkApiService.publishBlogPost(newBlog)
             .then(newPost => {
-                debugger
+                console.log(newPost)
             })
             .catch(res => this.setState({ error: res.error }))
     }
