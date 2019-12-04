@@ -1,0 +1,4 @@
+.message-templates textarea:active, .active-message {
+    background: black;
+    color: whitesmoke;
+}

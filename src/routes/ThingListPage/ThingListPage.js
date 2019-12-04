@@ -21,8 +21,9 @@ export default class ThingListPage extends Component {
 
   }
 
-  login() {
+  login(user) {
     this.setState({ logged: true })
+    this.props.login(user)
   }
 
   renderThings() {
@@ -48,7 +49,7 @@ export default class ThingListPage extends Component {
         TokenService.saveAuthToken(res.authToken)
         this.login()
       })
-    .catch(res => console.log(res))
+      .catch(res => console.log(res))
   }
 
   render() {
@@ -61,27 +62,27 @@ export default class ThingListPage extends Component {
       <Section list className='ThingListPage'>
         <div className='landing-block'>
           <h1>Network Keith</h1>
-          <p>You are invited to join one of the fastest growing personal network programs!!<br/>
-          Maintain and grow your personal family & friend's relationships.
-          <br/>
-          Keep your family & friends updated on your life.
-          <br/>
-          Hundreds of programs are available to send meaningful information to only the friends and family members you want to share your life with.
-          <br/>
-          You now have the ability to chose the people in your life you want to share you information with by chosing on or all of you family and friends.
-          <br/>
-          The information you choose to share can easily be sent to one or all of your family and freinds.
-          <br/>
-          This new network program is designed to share the information you created. Your information remains private and is only seen by the family and freinds you choose. Your information can be removed at any time.
-          <br/>
-          We provide the network program free of charge and we are compensated only by the companies with advertisement on the network. We hope that you will support the companies that advertise.
-          <br/>
-          We never ask for credit card information or social security information and we never sell anything through this program.
-          <br/>
-          <b>Join Today!!! - It's Free!!!</b> Your friends and family can notify you by email or text or both.</p>
+          <p>You are invited to join one of the fastest growing personal network programs!!<br />
+            Maintain and grow your personal family & friend's relationships.
+          <br />
+            Keep your family & friends updated on your life.
+          <br />
+            Hundreds of programs are available to send meaningful information to only the friends and family members you want to share your life with.
+          <br />
+            You now have the ability to chose the people in your life you want to share you information with by chosing on or all of you family and friends.
+          <br />
+            The information you choose to share can easily be sent to one or all of your family and freinds.
+          <br />
+            This new network program is designed to share the information you created. Your information remains private and is only seen by the family and freinds you choose. Your information can be removed at any time.
+          <br />
+            We provide the network program free of charge and we are compensated only by the companies with advertisement on the network. We hope that you will support the companies that advertise.
+          <br />
+            We never ask for credit card information or social security information and we never sell anything through this program.
+          <br />
+            <b>Join Today!!! - It's Free!!!</b> Your friends and family can notify you by email or text or both.</p>
         </div>
-        <RegistrationForm onSuccessfulRegistration={this.redirectSuccessfulRegistration}/>
-        <LoginForm onLogin={() => this.login()} />
+        <RegistrationForm onSuccessfulRegistration={this.redirectSuccessfulRegistration} />
+        <LoginForm onLogin={this.login} />
       </Section>
     )
   }

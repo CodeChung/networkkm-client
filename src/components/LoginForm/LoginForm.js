@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import { Button, Input } from '../Utils/Utils'
 import NetworkApiService from '../../services/network-api-service'
 import TokenService from '../../services/token-service'
@@ -8,7 +9,7 @@ export default class LoginForm extends Component {
     onLoginSuccess: () => { }
   }
 
-  state = { error: null }
+  state = { logged: false, error: null }
 
   handleSubmitBasicAuth = ev => {
     ev.preventDefault()
@@ -20,7 +21,8 @@ export default class LoginForm extends Component {
     NetworkApiService.loginUser(user)
       .then(res => {
         TokenService.saveAuthToken(res.authToken)
-        this.props.onLogin()
+        NetworkApiService.getUser()
+        this.setState({ logged: true })
       })
       .catch(res => this.setState({ error: res.error }))
 
@@ -29,7 +31,10 @@ export default class LoginForm extends Component {
   }
 
   render() {
-    const { error } = this.state
+    const { logged, error } = this.state
+    if (logged) {
+      return <Redirect to='/home' />
+    }
     return (
       <form
         className='LoginForm'

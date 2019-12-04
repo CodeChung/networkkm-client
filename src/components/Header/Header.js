@@ -18,13 +18,14 @@ export default class Header extends Component {
 
   handleLogoutClick = () => {
     TokenService.clearAuthToken()
+    this.props.refresh()
   }
 
   renderLogoutLink() {
     const { name } = this.state
     return (
       <div className='Header__logged-in'>
-        {name }
+        {`${name} | `}
         <Link
           onClick={this.handleLogoutClick}
           to='/'>
@@ -42,6 +43,7 @@ export default class Header extends Component {
   }
 
   render() {
+    const { name } = this.state
     return <>
       <nav className='Header'>
         <h1>
@@ -50,7 +52,7 @@ export default class Header extends Component {
           </Link>
         </h1>
         <span className='Header__tagline--wide'>About</span>
-        {TokenService.hasAuthToken()
+        {name
           ? this.renderLogoutLink()
           : this.renderLoginLink()}
       </nav>

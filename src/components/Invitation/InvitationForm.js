@@ -19,6 +19,20 @@ class InvitationForm extends React.Component {
         }
     }
 
+    componentDidUpdate(prevProps) {
+        const { first, last, email, cell } = this.state
+        if (prevProps.sendInvites !== this.props.sendInvites) {
+            console.log('ok we can send it out', first, last, email)
+            const friend = {
+                first_name: first,
+                last_name: last,
+                email: email,
+            }
+            this.props.addFriend(friend)
+            NetworkApiService.checkEmail(friend)
+        }
+    }
+
     onSubmit = () => {
         const { email } = this.state
         NetworkApiService.checkEmail(email)

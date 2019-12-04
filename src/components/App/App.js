@@ -13,18 +13,24 @@ import HomePage from '../../routes/HomePage/HomePage'
 import InvitePage from '../../routes/InvitePage/InvitePage'
 
 class App extends Component {
-  state = { hasError: false }
+  state = { hasError: false, user: null, refresh: false }
 
   static getDerivedStateFromError(error) {
     console.error(error)
     return { hasError: true }
   }
-
+  login = (user) => {
+    this.setState({ user })
+  }
+  refresh = () => {
+    this.setState({ refresh: !this.state.refresh })
+  }
   render() {
+    const { user, refresh } = this.state
     return (
       <div className='App'>
         <header className='App__header'>
-          <Header />
+          {/* <Header /> */}
         </header>
         <main className='App__main'>
           {this.state.hasError && <p className='red'>There was an error! Oh no!</p>}
@@ -32,7 +38,8 @@ class App extends Component {
             <Route
               exact
               path={'/'}
-              component={ThingListPage}
+              refresh={refresh}
+              render={() => <ThingListPage login={this.login} />}
             />
             <Route
               path='/home'

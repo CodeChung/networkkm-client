@@ -161,7 +161,7 @@ class NetworkColumns extends React.Component {
                     </div>
                 </div>
                 <div className='home-column'>
-                    <h2>My Network<span className='col-count'>{friendSearch.length ? friendSearch.length : friendList.length}</span></h2>
+                    <h2>Network<span className='col-count'>{friendSearch.length ? friendSearch.length : friendList.length}</span></h2>
                     <div className='column-box'>
                         <form>
                             <input
@@ -182,7 +182,7 @@ class NetworkColumns extends React.Component {
                     </div>
                 </div>
                 <div className='home-column'>
-                    <h2>My Community<span className='col-count'>{communitySearch.length ? communitySearch.length : communityList.length}</span></h2>
+                    <h2>Community<span className='col-count'>{communitySearch.length ? communitySearch.length : communityList.length}</span></h2>
                     <div className='column-box'>
                         <form>
                             <input
@@ -197,7 +197,7 @@ class NetworkColumns extends React.Component {
                     </div>
                 </div>
                 <div className='home-column'>
-                    <h2>My World<span className='col-count'>{worldSearch.length ? worldSearch.length : worldList.length}</span></h2>
+                    <h2>World<span className='col-count'>{worldSearch.length ? worldSearch.length : worldList.length}</span></h2>
                     <div className='column-box'>
                         <form>
                             <input
@@ -216,6 +216,7 @@ class NetworkColumns extends React.Component {
                     <div className='column-box'>
                         <ul>
                             <li><Button onClick={this.props.openBlog}>Blog</Button></li>
+                            <li><Button>Photos</Button></li>
                             <li><Link to='/'><Button>Events</Button></Link></li>
                             <li><Link to='/'><Button>Groups</Button></Link></li>
                         </ul>

@@ -33,6 +33,10 @@ class Invitation extends React.Component {
         NetworkApiService.checkEmail(friend)
     }
 
+    triggerSend = () => {
+        console.log('triggered')
+        this.setState({ send: true })
+    }
 
     handleFirst = (event) => {
         this.setState({ first: event.target.value })
@@ -51,7 +55,7 @@ class Invitation extends React.Component {
     }
 
     render() {
-        const { rows, first, last, phone, email } = this.state
+        const { rows, first, last, phone, email, send } = this.state
         return (
             <div className='invitation'>
                 <h2>Invite New Members</h2>
@@ -63,11 +67,13 @@ class Invitation extends React.Component {
                             last={row.last}
                             email={row.email}
                             phone={row.phone}
+                            addFriend={this.props.addFriend}
                             active={this.state.send}
+                            sendInvites={send}
                         />
                     )}
                 </form>
-                <form>
+                {/* <form>
                     <input onChange={(e) => this.handleFirst(e)} placeholder='First Name' value={first} />
                     <input onChange={(e) => this.handleLast(e)} placeholder='Last Name' value={last} />
                     <input onChange={(e) => this.handleEmail(e)} placeholder='Email' value={email} />
@@ -77,12 +83,13 @@ class Invitation extends React.Component {
                         last_name: last,
                         email: email,
                     })}>Invite</button>
-                </form>
+                </form> */}
 
                 <button onClick={this.addInvitation}>Insert New Row</button>
                 <button onClick={this.sendInvitations}>Choose from One of 5 Messages</button>
                 {/* <button onClick={(friend) => this.staticAdd(friend)}>Invite</button> */}
-                <MessageTemplates />
+                <MessageTemplates 
+                    send={this.triggerSend} />
             </div>
         )
     }

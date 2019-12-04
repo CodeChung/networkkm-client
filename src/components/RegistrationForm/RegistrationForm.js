@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
+import { Redirect } from 'react-router-dom'
 import { Button, Input, Required } from '../Utils/Utils'
 import NetworkApiService from '../../services/network-api-service'
+import TokenService from '../../services/token-service'
 
 export default class RegistrationForm extends Component {
   static defaultProps = {
@@ -11,7 +13,8 @@ export default class RegistrationForm extends Component {
     first: '',
     last: '',
     email: '',
-    error: null 
+    error: null,
+    registered: false, 
   }
   
   componentDidMount() {
@@ -38,7 +41,8 @@ export default class RegistrationForm extends Component {
         this.props.onSuccessfulRegistration(newUser, newPassword)
       })
       .catch(err => this.setState({ error: err.error }))
-
+    TokenService.saveAuthToken('yolo')
+    this.setState({ registered: true })
     first_name.value = ''
     email.value = ''
     last_name.value = ''
@@ -46,7 +50,10 @@ export default class RegistrationForm extends Component {
   }
 
   render() {
-    const { first, last, email, error } = this.state
+    const { first, last, email, error, registered } = this.state
+    if (registered) {
+      return <Redirect to='/home' />
+    }
     return (
       <form
         className='RegistrationForm'

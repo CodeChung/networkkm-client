@@ -9,6 +9,7 @@ import NetworkSearch from '../../components/NetworkSearch/NetworkSearch'
 import NetworkColumns from '../../components/NetworkColumns/NetworkColumns'
 import Profile from '../../components/Profile/Profile'
 import Blog from '../../components/Blog/Blog'
+import Header from '../../components/Header/Header'
 
 
 export default class HomePage extends Component {
@@ -103,6 +104,7 @@ export default class HomePage extends Component {
         }
         return (
             <Section className='HomePage'>
+                <Header />
                 <NetworkColumns 
                     newFriend={this.state.newFriend} 
                     openProfile={this.setProfile} 
